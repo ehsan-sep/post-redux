@@ -1,33 +1,58 @@
-import React from 'react'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from 'react-router-dom'
+// import React from 'react'
+// import {
+//   BrowserRouter as Router,
+//   Switch,
+//   Route,
+//   Redirect,
+// } from 'react-router-dom'
 
-import { Navbar } from './app/Navbar'
+// import { Navbar } from './app/Navbar'
 
-function App() {
-  return (
-    <Router>
-      <Navbar />
-      <div className="App">
-        <Switch>
-          <Route
-            exact
-            path="/"
-            render={() => (
-              <section>
-                <h2>Welcome to the Redux Essentials example app!</h2>
-              </section>
-            )}
-          />
-          <Redirect to="/" />
-        </Switch>
-      </div>
-    </Router>
-  )
-}
+// function App() {
+//   return (
+//     <Router>
+//       <Navbar />
+//       <div className="App">
+//         <Switch>
+//           <Route
+//             exact
+//             path="/"
+//             render={() => (
+//               <section>
+//                 <h2>Welcome to the Redux Essentials example app!</h2>
+//               </section>
+//             )}
+//           />
+//           <Redirect to="/" />
+//         </Switch>
+//       </div>
+//     </Router>
+//   )
+// }
 
-export default App
+// export default App
+ import React from "react";
+
+ 
+
+ import {Navbar} from "./app/Navbar"
+
+ import {PostsList} from "./features/posts/PostsList"
+ import { AddPostForm } from "./features/posts/AddPostsForm"
+
+ const App = () => {
+   return (
+<React.Fragment>
+     <Navbar/>
+       <div className="App">
+        <AddPostForm/>
+          <PostsList/>
+  
+       </div>
+       </React.Fragment>
+ 
+
+   )
+ }
+
+ export default App
