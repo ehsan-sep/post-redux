@@ -12,8 +12,8 @@ const onContentChange = (e) => setContent(e.target.value)
 const onSavePostClick = () => {
 
     if(title && content){
-        dispatch(postadded({id:nanoid(),title,content}))
-
+        // dispatch(postadded({id:nanoid(),title,content}))
+        dispatch(postadded(title,content))
         setContent('');
         setTitle('')
     }
