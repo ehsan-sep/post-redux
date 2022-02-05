@@ -1,23 +1,36 @@
 import React,{useState} from "react";
 import {nanoid} from "@reduxjs/toolkit"
-import {useDispatch} from "react-redux"
+import {useSelector,useDispatch} from "react-redux"
 import {postadded} from "./postSlice"
+import userSlice from "../users/userSlice";
 
 export const AddPostForm = () => {
     const [title,setTitle] = useState('');
     const [content , setContent]= useState('');
-    const dispatch = useDispatch();
+    const [userId , setUserId]=useState();
+
+const dispatch = useDispatch();
+const users = useSelector(state=>state.users)
+
 const onChangeTitle = (e)=> setTitle(e.target.value)
 const onContentChange = (e) => setContent(e.target.value)
+const onAuthorHandle = (e)=>{setUserId(e.target.value)}
+
 const onSavePostClick = () => {
 
-    if(title && content){
+    if(title && content&&userId){
         // dispatch(postadded({id:nanoid(),title,content}))
-        dispatch(postadded(title,content))
+        dispatch(postadded(title,content,userId))
         setContent('');
         setTitle('')
     }
 }
+
+const canSave = Boolean(title) && Boolean(content) && Boolean(userId);
+
+const userOptions = users.map(user => (
+    <option value={user.id} key={user.id}>{user.name}</option>
+));
 
 return (
     <section>
@@ -27,8 +40,15 @@ return (
             <input id="postTitle" name="postTitle" value={title} onChange={onChangeTitle} />
             <label htmlFor="postContent">post content :</label>
             <textarea id="postContent" name="postContent" value={content} onChange={onContentChange}/>
-            <button type="button" onClick={onSavePostClick}>save post</button>
+            
+            <label htmlFor="postAuthor">post Author:</label>
+           <select value={userId} onChange={onAuthorHandle}>
+               <option value=""></option>
+               {userOptions}
+           </select>
         </form>
+
+        <button type="button" onClick={onSavePostClick} disabled={!canSave}>save post</button>
     </section>
 )
 }

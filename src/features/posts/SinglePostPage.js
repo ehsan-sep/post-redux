@@ -2,6 +2,8 @@ import {useSelector} from "react-redux"
 import React from "react"
 import {Link,useParams} from "react-router-dom"
 import {Navbar} from "../../app/Navbar"
+import {PostAuthor}  from "./PostAuthor"
+import {TimeAgo} from "./TimeAgo"
 
 export const SinglePagePost=()=>{
     const params = useParams();
@@ -21,6 +23,8 @@ export const SinglePagePost=()=>{
         <article className="post">
             <h1>{post.title}</h1>
             <p className="post-content" >{post.content}</p>
+            <PostAuthor userId={post.user}/>
+            <TimeAgo timeStamp={post.date}/>
             <Link to={`/editPost/${post.id}` } className="button">edit post</Link>
         </article>
         </section>
