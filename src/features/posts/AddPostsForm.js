@@ -1,14 +1,14 @@
 import React,{useState} from "react";
 import {nanoid} from "@reduxjs/toolkit"
 import {useSelector,useDispatch} from "react-redux"
-import {postadded} from "./postSlice"
-import userSlice from "../users/userSlice";
+// import {postadded} from "./postSlice"
+import {addNewPost} from "./postSlice";
 
 export const AddPostForm = () => {
     const [title,setTitle] = useState('');
     const [content , setContent]= useState('');
     const [userId , setUserId]=useState();
-
+    const [addRequestStatus , setaddRequeststatus]= useState('idle')
 const dispatch = useDispatch();
 const users = useSelector(state=>state.users)
 
@@ -16,17 +16,18 @@ const onChangeTitle = (e)=> setTitle(e.target.value)
 const onContentChange = (e) => setContent(e.target.value)
 const onAuthorHandle = (e)=>{setUserId(e.target.value)}
 
-const onSavePostClick = () => {
+// const onSavePostClick = () => {
 
-    if(title && content&&userId){
-        // dispatch(postadded({id:nanoid(),title,content}))
-        dispatch(postadded(title,content,userId))
-        setContent('');
-        setTitle('')
-    }
-}
+//     if(title && content&&userId){
+//         // dispatch(postadded({id:nanoid(),title,content}))
+//         dispatch(postadded(title,content,userId))
+//         setContent('');
+//         setTitle('')
+//     }
+// }
 
-const canSave = Boolean(title) && Boolean(content) && Boolean(userId);
+const canSave = [title,content,userId].every(Boolean)&& addRequestStatus ==='idle';
+// Boolean(title) && Boolean(content) && Boolean(userId);
 
 const userOptions = users.map(user => (
     <option value={user.id} key={user.id}>{user.name}</option>
