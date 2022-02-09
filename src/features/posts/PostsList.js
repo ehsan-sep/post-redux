@@ -10,10 +10,11 @@ import {selectAllPosts,fetchPosts} from "./postSlice"
 import {Spinner} from "../../components/Spinner"
 
 const PostExcerpt = ({post})=>{
+    debugger;
     return (
         <article className="post-excerpt" key={post.id}>
             <h1>{post.title}</h1>
-            <p className="post-content">{post.content.substring(0,100)}</p>
+            <p className="post-content">{post.content.substring(0, 100)}</p>
             <PostAuthor userId={post.user}/>
             <TimeAgo timeStamp={post.date}/>
             <Link to={`/post/${post.id}`} className="button muted-button">

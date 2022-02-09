@@ -29,6 +29,24 @@ const onAuthorHandle = (e)=>{setUserId(e.target.value)}
 const canSave = [title,content,userId].every(Boolean)&& addRequestStatus ==='idle';
 // Boolean(title) && Boolean(content) && Boolean(userId);
 
+const onSaveClick = async ()=>{
+    if(canSave){
+        try{
+        setaddRequeststatus('pending');
+        await dispatch(addNewPost({title,content,user:userId}));
+        setTitle('')
+        setContent('');
+        setUserId('');
+
+        }catch(err) {
+            console.log('faile due to erro :' , err)
+
+        }finally{
+            setaddRequeststatus('idle')
+        }
+    }
+}
+
 const userOptions = users.map(user => (
     <option value={user.id} key={user.id}>{user.name}</option>
 ));
@@ -49,7 +67,7 @@ return (
            </select>
         </form>
 
-        <button type="button" onClick={onSavePostClick} disabled={!canSave}>save post</button>
+        <button type="button" onClick={onSaveClick} disabled={!canSave}>save post</button>
     </section>
 )
 }

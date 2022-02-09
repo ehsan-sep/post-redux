@@ -30,3 +30,7 @@ const userSlice = createSlice({
 // console.log(userSlice.reducer({type:''}))
 
 export default userSlice.reducer;
+
+export const selectAllUser = state => state.user;
+
+export const selectUserById = (state , userId) => state.user.find(user => user.id===userId)

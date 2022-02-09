@@ -34,6 +34,7 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts',async ()=>{
 
 export const addNewPost = createAsyncThunk('posts/addNewPost',async (initialpost)=>{
     const response = await client.post('/fakeApi/posts', initialpost);
+    debugger;
     return response.data
 })
 
