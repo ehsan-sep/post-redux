@@ -9,6 +9,9 @@ import { worker } from './api/server'
 import {SinglePagePost} from "./features/posts/SinglePostPage"
 import {EditPostForm} from "./features/posts/EditPostForm"
 import {fetchUsers} from "./features/users/userSlice"
+import {UsersList} from "./features/users/UserList"
+import {UserPage} from "./features/users/UserPage"
+import {NotificationsList} from "./features/notifications/NotificationsList"
 
 // Wrap app rendering so we can wait for the mock API to initialize
 async function start() {
@@ -25,6 +28,16 @@ async function start() {
         <Route path="/" element={<App/>}></Route>
         <Route path="/post/:postId" element={<SinglePagePost/>}/>
         <Route path="/editPost/:postId" element={<EditPostForm/>}/>
+        {/* <Route path="/users" element={<UsersList/>}></Route>
+        <Route path="/users/:userId" element={<UserPage/>}></Route> */}
+      </Routes>
+      <Routes>
+      
+        <Route path="/users" element={<UsersList/>}>
+        <Route path=":userId" element={<UserPage/>}></Route>
+        </Route>
+        <Route path="/notifications" element={<NotificationsList/>}></Route>
+        {/* <Route path="/users/:userId" element={<UserPage/>}></Route> */}
       </Routes>
         
         </BrowserRouter>

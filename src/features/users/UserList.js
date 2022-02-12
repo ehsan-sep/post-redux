@@ -1,13 +1,11 @@
 import React from "react";
-
-import {Link} from "react-dom"
-
+import {Link,Outlet} from "react-router-dom"
 import { useSelector } from "react-redux";
-import {selectAllUser} from "./userSlice"
+import {selectAllUsers} from "./userSlice"
+import {Navbar} from "../../app/Navbar"
 
-
-export const UserList =() => {
-    const users = useSelector(selectAllUser)
+export const UsersList =() => {
+    const users = useSelector(selectAllUsers)
     const renderUser = users.map(user =>(
             <li key={user.id}>
                 <Link to={`/users/${user.id}`} >{user.name}</Link>
@@ -16,10 +14,17 @@ export const UserList =() => {
     )
 
     return (
+        <>
+        <Navbar/>
         <section>
         <h1>users</h1>
         <ul>{renderUser}</ul>
         </section>
+        <Outlet/>
+        </>
+        
     )
 }
+
+
 
