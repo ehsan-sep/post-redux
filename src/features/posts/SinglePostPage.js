@@ -6,32 +6,45 @@ import {PostAuthor}  from "./PostAuthor"
 import {TimeAgo} from "./TimeAgo"
 import {ReactionButton} from "./ReactionButton"
 import {selectPostById} from "./postSlice"
+import {Spinner} from "../../components/Spinner"
+import {useGetPostQuery} from "../api/apiSlice"
+
 
 export const SinglePagePost=()=>{
     const params = useParams();
-    const post = useSelector(state => selectPostById(state,params.postId))
+    // const post = useSelector(state => selectPostById(state,params.postId))
+    const {data:post , isFetching,isSuccess} = useGetPostQuery(params.postId)
 
-    if(!post ){
-        return (
+    // if(!post ){
+    //     return (
+    //         <section>
+    //             <h1>post not found</h1>
+    //         </section>
+    //     )
+    // }
+     let content ;
+    if(isFetching){
+        content = <Spinner text="Loading ...."></Spinner>
+    }else if(isSuccess){
+        content=(
+            
             <section>
-                <h1>post not found</h1>
+            <article className="post">
+                <h1>{post.title}</h1>
+                <p className="post-content" >{post.content}</p>
+                <PostAuthor userId={post.user}/>
+                <TimeAgo timeStamp={post.date}/>
+                <Link to={`/editPost/${post.id}` } className="button">edit post</Link>
+                <ReactionButton post={post}/>
+            </article>
             </section>
         )
     }
 
     return (
         <React.Fragment>
-        <Navbar/>
-        <section>
-        <article className="post">
-            <h1>{post.title}</h1>
-            <p className="post-content" >{post.content}</p>
-            <PostAuthor userId={post.user}/>
-            <TimeAgo timeStamp={post.date}/>
-            <Link to={`/editPost/${post.id}` } className="button">edit post</Link>
-            <ReactionButton post={post}/>
-        </article>
-        </section>
+            <Navbar/>
+            {content}
         </React.Fragment>
     )
 }

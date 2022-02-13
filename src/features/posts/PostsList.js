@@ -8,10 +8,10 @@ import { ReactionButton } from "./ReactionButton"
 import {selectAllPosts,fetchPosts} from "./postSlice"
 import {Spinner} from "../../components/Spinner"
 import { useGetPostsQuery } from  "../api/apiSlice"
-import { errors } from "msw/lib/types/context";
+
 
 const PostExcerpt = ({post})=>{
-    debugger;
+    
     return (
         <article className="post-excerpt" key={post.id}>
             <h1>{post.title}</h1>
@@ -35,7 +35,7 @@ export const PostsList = ()=>{
     // const error = useSelector(state=>state.posts.error)
     // const dispatch = useDispatch();
     const {
-        date:posts=[],
+        data:posts=[],
         isLoading,
         isSuccess,
         isError,
@@ -65,12 +65,14 @@ export const PostsList = ()=>{
 
     const sortedPost = useMemo(()=>{
         const sortedPost = posts.slice();
+    
         sortedPost.sort((a,b)=>b.date.localeCompare(a.date))
         return sortedPost
     },[posts])
     if(isLoading){
          content=<Spinner text="Loading....."/>
     }else if (isSuccess){
+       
          content=sortedPost.map(post => <PostExcerpt key={post.id} post={post} />)
     }else if (isError) {
          content=<div>{Error.toString()}</div>
