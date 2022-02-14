@@ -4,6 +4,7 @@ export const apiSlice = createApi({
     reducerPath:'api',
     baseQuery:fetchBaseQuery({baseUrl:'/fakeApi'}),
     tagTypes:['post'],
+    keepUnusedDataFor:10,
     endpoints:builder =>({
         getPosts :builder.query({
             query  : ()=>'/posts',

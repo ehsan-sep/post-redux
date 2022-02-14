@@ -43,7 +43,7 @@ export const PostsList = ()=>{
         Error,
         isFetching,
         refetch
-    }=useGetPostsQuery();
+    }=useGetPostsQuery({},{refetchOnMountOrArgChange:true});
 
     // useEffect(()=>{
     //     if(postStatus === 'idle'){
