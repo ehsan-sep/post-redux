@@ -8,6 +8,7 @@ import { ReactionButton } from "./ReactionButton"
 import {selectAllPosts,fetchPosts} from "./postSlice"
 import {Spinner} from "../../components/Spinner"
 import { useGetPostsQuery } from  "../api/apiSlice"
+import classnames from "classnames"
 
 
 const PostExcerpt = ({post})=>{
@@ -39,7 +40,9 @@ export const PostsList = ()=>{
         isLoading,
         isSuccess,
         isError,
-        Error
+        Error,
+        isFetching,
+        refetch
     }=useGetPostsQuery();
 
     // useEffect(()=>{
@@ -73,7 +76,9 @@ export const PostsList = ()=>{
          content=<Spinner text="Loading....."/>
     }else if (isSuccess){
        
-         content=sortedPost.map(post => <PostExcerpt key={post.id} post={post} />)
+         const renderPost=sortedPost.map(post => <PostExcerpt key={post.id} post={post} />)
+         const continarCalssNames = classnames('posts-container',{disabled :isFetching})
+         content = <div className={continarCalssNames}>{renderPost}</div>
     }else if (isError) {
          content=<div>{Error.toString()}</div>
     }
@@ -83,6 +88,7 @@ export const PostsList = ()=>{
     return (
         <section className="posts-list">
             <h1>posts</h1>
+            <button onClick={refetch}>refecth post</button>
             {content}
         </section>
     )

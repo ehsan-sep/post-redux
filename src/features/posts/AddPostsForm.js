@@ -3,13 +3,15 @@ import {nanoid} from "@reduxjs/toolkit"
 import {useSelector,useDispatch} from "react-redux"
 // import {postadded} from "./postSlice"
 import {addNewPost} from "./postSlice";
+import {useAddNewPostMutation} from "../api/apiSlice"
+import {Spinner} from "../../components/Spinner"
 
 export const AddPostForm = () => {
     const [title,setTitle] = useState('');
     const [content , setContent]= useState('');
     const [userId , setUserId]=useState();
     const [addRequestStatus , setaddRequeststatus]= useState('idle')
-const dispatch = useDispatch();
+// const dispatch = useDispatch();
 const users = useSelector(state=>state.users)
 
 const onChangeTitle = (e)=> setTitle(e.target.value)
@@ -25,15 +27,18 @@ const onAuthorHandle = (e)=>{setUserId(e.target.value)}
 //         setTitle('')
 //     }
 // }
+const [addNewPost , {isLoading}]=useAddNewPostMutation()
 
-const canSave = [title,content,userId].every(Boolean)&& addRequestStatus ==='idle';
+// const canSave = [title,content,userId].every(Boolean)&& addRequestStatus ==='idle';
 // Boolean(title) && Boolean(content) && Boolean(userId);
+const canSave = [title,content,userId].every(Boolean)&& !isLoading;
 
 const onSaveClick = async ()=>{
     if(canSave){
         try{
-        setaddRequeststatus('pending');
-        await dispatch(addNewPost({title,content,user:userId}));
+        // setaddRequeststatus('pending');
+        // await dispatch(addNewPost({title,content,user:userId}));
+        await addNewPost({title,content,user:userId}).unwrap()
         setTitle('')
         setContent('');
         setUserId('');
@@ -42,7 +47,7 @@ const onSaveClick = async ()=>{
             console.log('faile due to erro :' , err)
 
         }finally{
-            setaddRequeststatus('idle')
+            // setaddRequeststatus('idle')
         }
     }
 }
