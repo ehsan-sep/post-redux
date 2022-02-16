@@ -5,23 +5,26 @@ import {useNavigate,useParams} from "react-router-dom"
 
 import {postUpdated,selectPostById} from "./postSlice"
 import {Navbar} from "../../app/Navbar"
+import {useGetPostQuery,useEditPostMutation} from "../api/apiSlice"
 
 export const EditPostForm = ()=>{
 
     const params = useParams();
     const navigate=useNavigate();
-    const post = useSelector(state=>selectPostById(state,params.postId));
-
+    // const post = useSelector(state=>selectPostById(state,params.postId));
+const {data:post} = useGetPostQuery(params.postId)
+const [editPost,{isLoading}]= useEditPostMutation();
     const [title , setTitle]=useState(post.title);
     const [content,setContent]=useState(post.content);
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const onTitleHandle = (e)=>{setTitle(e.target.value)}
     const onContentHandle = (e)=> {setContent(e.target.value)}
 
-    const onSaveHandle = ()=>{
+    const onSaveHandle = async ()=>{
         if(title&&content){
-        dispatch(postUpdated({id:params.postId,title,content}));
+        // dispatch(postUpdated({id:params.postId,title,content}));
+        await editPost({id:post.id ,title,content,})
         navigate('/post/'+post.id)
          }
     }
