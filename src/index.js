@@ -8,16 +8,18 @@ import {BrowserRouter , Route,Routes} from "react-router-dom"
 import { worker } from './api/server'
 import {SinglePagePost} from "./features/posts/SinglePostPage"
 import {EditPostForm} from "./features/posts/EditPostForm"
-import {fetchUsers} from "./features/users/userSlice"
+// import {fetchUsers} from "./features/users/userSlice"
 import {UsersList} from "./features/users/UserList"
 import {UserPage} from "./features/users/UserPage"
 import {NotificationsList} from "./features/notifications/NotificationsList"
-
+import {apiSlice} from "./features/api/apiSlice"
+import {extendedApiSlice} from "./features/users/userSlice"
 // Wrap app rendering so we can wait for the mock API to initialize
 async function start() {
   // Start our mock API server
   await worker.start({ onUnhandledRequest: 'bypass' })
- store.dispatch(fetchUsers());
+//  store.dispatch(fetchUsers());
+store.dispatch(extendedApiSlice.endpoints.getUsers.initiate())
   ReactDOM.render(
    
     <React.StrictMode>

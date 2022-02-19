@@ -5,6 +5,7 @@ import {useSelector,useDispatch} from "react-redux"
 import {addNewPost} from "./postSlice";
 import {useAddNewPostMutation} from "../api/apiSlice"
 import {Spinner} from "../../components/Spinner"
+import {selectAllUsers} from "../users/userSlice"
 
 export const AddPostForm = () => {
     const [title,setTitle] = useState('');
@@ -12,7 +13,7 @@ export const AddPostForm = () => {
     const [userId , setUserId]=useState();
     const [addRequestStatus , setaddRequeststatus]= useState('idle')
 // const dispatch = useDispatch();
-const users = useSelector(state=>state.users)
+const users = useSelector(selectAllUsers)
 
 const onChangeTitle = (e)=> setTitle(e.target.value)
 const onContentChange = (e) => setContent(e.target.value)
