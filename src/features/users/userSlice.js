@@ -74,5 +74,5 @@ const selectUserData = createSelector(
     userResult => userResult.data
 )
 
-export const {selectAll:selectAllUser,select}=userAdapter.getSelectors(state =>
+export const {selectAll:selectAllUsers,selectById:selectUserById}=userAdapter.getSelectors(state =>
     selectUserData(state)??initialState )
